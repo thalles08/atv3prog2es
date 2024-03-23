@@ -27,10 +27,12 @@ export default function FormCadProdutos(props) {
       evento.stopPropagation();
       const form = evento.currentTarget;
       if (form.checkValidity() === false) {
-        setValidado(false);
+        setValidado(true);
       }
       else {
-        setValidado(true);
+        setValidado(false);
+        props.setListaProdutos([...props.listaProdutos, produto]);
+        props.setExibirTabela(true);
       }
     };
       
@@ -158,6 +160,9 @@ export default function FormCadProdutos(props) {
         </Form.Group>
       </Row>
       <Button type="submit">Cadastrar</Button>
+      <Button onClick={() => {
+        props.setExibirTabela(true);
+      }}>Voltar</Button>
     </Form>
   );
 }

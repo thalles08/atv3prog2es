@@ -28,10 +28,12 @@ export default function FormCadFornecedores(props) {
       evento.stopPropagation();
       const form = evento.currentTarget;
       if (form.checkValidity() === false) {
-        setValidado(false);
+        setValidado(true);
       }
       else{
-        setValidado(true);
+        setValidado(false);
+        props.setListaFornecedores([...props.listaFornecedores, fornecedor]);
+        props.setExibirTabela(true);
       }
     };
       
@@ -173,6 +175,9 @@ export default function FormCadFornecedores(props) {
         </Form.Group>
       </Row>
       <Button type="submit">Cadastrar</Button>
+      <Button onClick={() => {
+        props.setExibirTabela(true);
+      }}>Voltar</Button>
     </Form>
   );
 }

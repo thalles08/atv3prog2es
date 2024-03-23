@@ -25,10 +25,12 @@ export default function FormCadFuncionarios(props) {
       evento.stopPropagation();
       const form = evento.currentTarget;
       if (form.checkValidity() === false) {
-        setValidado(false);
+        setValidado(true);
       }
       else {
-        setValidado(true);
+        setValidado(false);
+        props.setListaFuncionarios([...props.listaFuncionarios, funcionario]);
+        props.setExibirTabela(true);
       }
     };
       
@@ -126,6 +128,9 @@ export default function FormCadFuncionarios(props) {
         </Form.Group>
       </Row>
       <Button type="submit">Cadastrar</Button>
+      <Button onClick={() => {
+        props.setExibirTabela(true);
+      }}>Voltar</Button>
     </Form>
   );
 }
