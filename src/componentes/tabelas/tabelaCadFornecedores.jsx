@@ -3,7 +3,7 @@ import { Button, Table } from "react-bootstrap";
 export default function TabelaCadFornecedores(props) {
     return (
       <div>
-        <Button onClick={()=>{
+        <Button variant="secondary" onClick={()=>{
           props.setExibirTabela(false);
         }}>Cadastrar novo Fornecedor</Button>
         <Table className="mt-3" striped bordered hover>
@@ -19,6 +19,7 @@ export default function TabelaCadFornecedores(props) {
               <th>Nome representante</th>
               <th>Telefone representante</th>
               <th>E-mail representante</th>
+              <th>Ações</th>
             </tr>
           </thead>
           <tbody>
@@ -36,6 +37,8 @@ export default function TabelaCadFornecedores(props) {
                             <td>{fornecedor.nomeRepresentante}</td>
                             <td>{fornecedor.telefoneRepresentante}</td>
                             <td>{fornecedor.emailRepresentante}</td>
+                            <td><Button variant='danger'>Excluir</Button> {' '}
+                                <Button variant='primary'>Alterar</Button></td>
                         </tr>
                     );
                 })

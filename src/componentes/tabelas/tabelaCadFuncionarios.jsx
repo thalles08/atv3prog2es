@@ -3,7 +3,7 @@ import { Button, Table } from "react-bootstrap";
 export default function TabelaCadFuncionarios(props) {
     return (
       <div>
-        <Button onClick={()=>{
+        <Button variant="secondary" onClick={()=>{
           props.setExibirTabela(false);
         }}>Cadastrar novo Funcionário</Button>
         <Table className="mt-3" striped bordered hover>
@@ -16,6 +16,7 @@ export default function TabelaCadFuncionarios(props) {
               <th>Endereço completo</th>
               <th>Telefone</th>
               <th>E-mail</th>
+              <th>Ações</th>
             </tr>
           </thead>
           <tbody>
@@ -30,6 +31,8 @@ export default function TabelaCadFuncionarios(props) {
                             <td>{funcionario.endereco}</td>
                             <td>{funcionario.telefone}</td>
                             <td>{funcionario.email}</td>
+                            <td><Button variant='danger'>Excluir</Button> {' '}
+                                <Button variant='primary'>Alterar</Button></td>
                         </tr>
                     );
                 })

@@ -4,11 +4,15 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import { Link } from 'react-router-dom';
 import Offcanvas from 'react-bootstrap/Offcanvas';
+import { useContext } from 'react';
+import ContextoUsuario from '../contextos/contextoUsuario';
 
 export default function Menu2 () {
-    return (
-<>
+  const [usuario, setUsuario] = useContext(ContextoUsuario);
+  return (
+    <>
       {[false].map((expand) => (
         <Navbar key={expand} expand={expand} className="bg-body-tertiary mb-3">
           <Container fluid>
@@ -22,15 +26,25 @@ export default function Menu2 () {
             >
               <Offcanvas.Header closeButton>
                 <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
-                  Menu
+                  <h4>Menu</h4>
+                  <h6>Usuário: {usuario.nome}</h6>
                 </Offcanvas.Title>
               </Offcanvas.Header>
               <Offcanvas.Body>
-                <Nav className="justify-content-end flex-grow-1 pe-3">
-                  <Nav.Link href="/">Página Inicial</Nav.Link>
-                  <Nav.Link href="/funcionarios">Cadastro de Funcionários</Nav.Link>
-                  <Nav.Link href="/produtos">Cadastro de Produtos</Nav.Link>
-                  <Nav.Link href="/fornecedores">Cadastro de Fornecedores</Nav.Link>
+              <Form className="d-flex">
+                  <Form.Control
+                    type="search"
+                    placeholder="Search"
+                    className="me-2"
+                    aria-label="Search"
+                  />
+                  <Button variant="outline-success">Search</Button>
+                </Form>
+                <Nav className="justify-content-end flex-grow-1 pe-3 mt-4">
+                  <Nav.Link><Link to={'/'}>Página Inicial</Link></Nav.Link>
+                  <Nav.Link><Link to={'/funcionarios'}>Cadastro de Funcionários</Link></Nav.Link>
+                  <Nav.Link><Link to={'/produtos'}>Cadastro de Produtos</Link></Nav.Link>
+                  <Nav.Link><Link to={'/fornecedores'}>Cadastro de Fornecedores</Link></Nav.Link>
                   <NavDropdown
                     title="Departamentos"
                     id={`offcanvasNavbarDropdown-expand-${expand}`}
@@ -41,20 +55,22 @@ export default function Menu2 () {
                     </NavDropdown.Item>
                   </NavDropdown>
                 </Nav>
-                <Form className="d-flex">
-                  <Form.Control
-                    type="search"
-                    placeholder="Search"
-                    className="me-2 mt-3"
-                    aria-label="Search"
-                  />
-                  <Button variant="outline-success" className='mt-3'>Search</Button>
-                </Form>
+                <Button 
+                  variant="outline-danger" 
+                  className='mt-5'
+                  onClick={()=>{
+                    setUsuario({
+                      nome:'',
+                      logado:false
+                    })
+                  }}
+                >Logout
+                </Button>
               </Offcanvas.Body>
             </Navbar.Offcanvas>
           </Container>
         </Navbar>
       ))}
     </>
-    );
+  );
 }
