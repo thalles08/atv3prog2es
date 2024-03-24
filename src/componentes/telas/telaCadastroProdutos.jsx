@@ -6,6 +6,8 @@ import { useState } from "react";
 export default function TelaCadastroProdutos(props) {
     const [exibirTabela, setExibirTabela] = useState(true);
     const [listaProdutos, setListaProdutos] = useState([]);
+    const [produtoSelecionado, setProdutoSelecionado] = useState({});
+    const [modoEdicao, setModoEdicao] = useState(false);
 
     if (exibirTabela) {
         return (
@@ -15,8 +17,12 @@ export default function TelaCadastroProdutos(props) {
                     <h5 className="mt-5">Lista de Produtos</h5>
                     <div className="mt-3">
                         <TabelaCadProdutos 
-                            listaProdutos={listaProdutos} 
-                            setExibirTabela={setExibirTabela} />
+                            listaProdutos={listaProdutos}
+                            setListaProdutos={setListaProdutos}
+                            setExibirTabela={setExibirTabela}
+                            setProdutoSelecionado={setProdutoSelecionado}
+                            setModoEdicao={setModoEdicao}
+                        />
                     </div>
 
                 </Pagina>
@@ -34,6 +40,9 @@ export default function TelaCadastroProdutos(props) {
                             setExibirTabela={setExibirTabela}
                             listaProdutos={listaProdutos}
                             setListaProdutos={setListaProdutos}
+                            produtoSelecionado={produtoSelecionado}
+                            setModoEdicao={setModoEdicao}
+                            modoEdicao={modoEdicao}
                         />
                     </div>
                 </Pagina>

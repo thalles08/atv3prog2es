@@ -6,7 +6,7 @@ import Row from "react-bootstrap/Row";
 
 export default function FormCadFuncionarios(props) {
     const [validado, setValidado] = useState(false);
-    const [funcionario, setFuncionario] = useState({
+    const [funcionario, setFuncionario] = useState(props.modoEdicao ? props.funcionarioSelecionado : {
       nome: "",
       dataNascimento: "",
       cpf: "",
@@ -29,7 +29,15 @@ export default function FormCadFuncionarios(props) {
       }
       else {
         setValidado(false);
-        props.setListaFuncionarios([...props.listaFuncionarios, funcionario]);
+        if (!props.modoEdicao) {
+          props.setListaFuncionarios([...props.listaFuncionarios, funcionario]);
+        }
+        else {
+          const posicao = props.listaFuncionarios.map(funcionario => funcionario.cpf).indexOf(props.funcionarioSelecionado.cpf);
+          let novaLista = [...props.listaFuncionarios];
+          novaLista[posicao] = funcionario;
+          props.setListaFuncionarios(novaLista);
+        }
         props.setExibirTabela(true);
       }
     };
@@ -37,7 +45,7 @@ export default function FormCadFuncionarios(props) {
   return (
     <Form noValidate validated={validado} onSubmit={manipularSubmissao}>
       <Row className="mb-3">
-        <Form.Group as={Col} md="4" controlId="validationCustom01">
+        <Form.Group as={Col} md="4">
           <Form.Label>Nome</Form.Label>
           <Form.Control
             required
@@ -52,7 +60,7 @@ export default function FormCadFuncionarios(props) {
             Informe o nome.
           </Form.Control.Feedback>
         </Form.Group>
-        <Form.Group as={Col} md="4" controlId="validationCustom02">
+        <Form.Group as={Col} md="4">
           <Form.Label>Data de nascimento</Form.Label>
           <Form.Control
             required
@@ -67,7 +75,7 @@ export default function FormCadFuncionarios(props) {
             Informe a data de nascimento.
           </Form.Control.Feedback>
         </Form.Group>
-        <Form.Group as={Col} md="4" controlId="validationCustom03">
+        <Form.Group as={Col} md="4">
           <Form.Label>CPF</Form.Label>
           <Form.Control
             required
@@ -84,7 +92,7 @@ export default function FormCadFuncionarios(props) {
         </Form.Group>
       </Row>
       <Row className="mb-3">
-        <Form.Group as={Col} md="6" controlId="validationCustom04">
+        <Form.Group as={Col} md="6">
           <Form.Label>Endereço completo</Form.Label>
           <Form.Control 
           type="text" 
@@ -98,7 +106,7 @@ export default function FormCadFuncionarios(props) {
             Informe o endereço completo.
           </Form.Control.Feedback>
         </Form.Group>
-        <Form.Group as={Col} md="3" controlId="validationCustom05">
+        <Form.Group as={Col} md="3">
           <Form.Label>Telefone</Form.Label>
           <Form.Control 
           type="text" 
@@ -112,7 +120,7 @@ export default function FormCadFuncionarios(props) {
             Informe o telefone.
           </Form.Control.Feedback>
         </Form.Group>
-        <Form.Group as={Col} md="3" controlId="validationCustom06">
+        <Form.Group as={Col} md="3">
           <Form.Label>E-mail</Form.Label>
           <Form.Control 
           type="text" 
@@ -127,8 +135,9 @@ export default function FormCadFuncionarios(props) {
           </Form.Control.Feedback>
         </Form.Group>
       </Row>
-      <Button type="submit">Cadastrar</Button>
+      <Button type="submit">{props.modoEdicao ? "Alterar" : "Cadastrar"}</Button>
       <Button onClick={() => {
+        props.setModoEdicao(false);
         props.setExibirTabela(true);
       }}>Voltar</Button>
     </Form>

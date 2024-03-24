@@ -34,11 +34,11 @@ export default function Menu2 () {
               <Form className="d-flex">
                   <Form.Control
                     type="search"
-                    placeholder="Search"
+                    placeholder="Pesquisar"
                     className="me-2"
                     aria-label="Search"
                   />
-                  <Button variant="outline-success">Search</Button>
+                  <Button variant="outline-success">Buscar</Button>
                 </Form>
                 <Nav className="justify-content-end flex-grow-1 pe-3 mt-4">
                   <Nav.Link><Link to={'/'}>Página Inicial</Link></Nav.Link>

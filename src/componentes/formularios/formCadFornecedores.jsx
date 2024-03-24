@@ -6,7 +6,7 @@ import Row from "react-bootstrap/Row";
 
 export default function FormCadFornecedores(props) {
     const [validado, setValidado] = useState(false);
-    const [fornecedor, setFornecedor] = useState({
+    const [fornecedor, setFornecedor] = useState(props.modoEdicao ? props.fornecedorSelecionado : {
       cnpj: "",
       razaoSocial: "",
       nomeFantasia: "",
@@ -30,9 +30,17 @@ export default function FormCadFornecedores(props) {
       if (form.checkValidity() === false) {
         setValidado(true);
       }
-      else{
+      else {
         setValidado(false);
-        props.setListaFornecedores([...props.listaFornecedores, fornecedor]);
+        if (!props.modoEdicao) {
+          props.setListaFornecedores([...props.listaFornecedores, fornecedor]);
+        }
+        else {
+          const posicao = props.listaFornecedores.map(fornecedor => fornecedor.cnpj).indexOf(props.fornecedorSelecionado.cnpj);
+          let novaLista = [...props.listaFornecedores];
+          novaLista[posicao] = fornecedor;
+          props.setListaFornecedores(novaLista);
+        }
         props.setExibirTabela(true);
       }
     };
@@ -174,8 +182,9 @@ export default function FormCadFornecedores(props) {
           </Form.Control.Feedback>
         </Form.Group>
       </Row>
-      <Button type="submit">Cadastrar</Button>
+      <Button type="submit">{props.modoEdicao ? "Alterar" : "Cadastrar"}</Button>
       <Button onClick={() => {
+        props.setModoEdicao(false);
         props.setExibirTabela(true);
       }}>Voltar</Button>
     </Form>

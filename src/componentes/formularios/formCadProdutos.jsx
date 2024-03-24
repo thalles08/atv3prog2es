@@ -6,7 +6,7 @@ import Row from "react-bootstrap/Row";
 
 export default function FormCadProdutos(props) {
     const [validado, setValidado] = useState(false);
-    const [produto, setProduto] = useState({
+    const [produto, setProduto] = useState(props.modoEdicao ? props.produtoSelecionado : {
       codigoProduto: "",
       descricaoProduto: "",
       marcaProduto: "",
@@ -22,7 +22,7 @@ export default function FormCadProdutos(props) {
       setProduto({ ...produto, [componente.name]: componente.value})
     }
 
-    function manipularSubmissao (evento) {
+    function manipularSubmissao(evento) {
       evento.preventDefault();
       evento.stopPropagation();
       const form = evento.currentTarget;
@@ -31,7 +31,15 @@ export default function FormCadProdutos(props) {
       }
       else {
         setValidado(false);
-        props.setListaProdutos([...props.listaProdutos, produto]);
+        if (!props.modoEdicao) {
+          props.setListaProdutos([...props.listaProdutos, produto]);
+        }
+        else {
+          const posicao = props.listaProdutos.map(produto => produto.codigoProduto).indexOf(props.produtoSelecionado.codigoProduto);
+          let novaLista = [...props.listaProdutos];
+          novaLista[posicao] = produto;
+          props.setListaProdutos(novaLista);
+        }
         props.setExibirTabela(true);
       }
     };
@@ -159,8 +167,9 @@ export default function FormCadProdutos(props) {
           </Form.Control.Feedback>
         </Form.Group>
       </Row>
-      <Button type="submit">Cadastrar</Button>
+      <Button type="submit">{props.modoEdicao ? "Alterar" : "Cadastrar"}</Button>
       <Button onClick={() => {
+        props.setModoEdicao(false);
         props.setExibirTabela(true);
       }}>Voltar</Button>
     </Form>
